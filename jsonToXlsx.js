@@ -59,19 +59,24 @@ async function jsonToExcelWithTranslation(jsonData) {
   for (let lang of Object.keys(jsonData.languages)) {
     let rows = [];
 
-    for (let category of ["labels", "strings", "errors"]) {
+    //insert new voices after "languages"
+    for (let category of ["languages", "labels", "strings", "errors"]) {
       if (jsonData[category] && Object.keys(jsonData[category]).length > 0) {
-        // Translate all keys
-        const translations = await Promise.all(
-          Object.keys(jsonData[category]).map(async (key) => {
-            const translatedValue = await translateText(jsonData[category][key], lang);
-            return { Category: category, Key: key, Value: translatedValue };
-          })
-        );
-
+        let translations;
+        if (category === "languages") {
+          translations = Object.keys(jsonData[category]).map((key) => {
+            return { Category: category, Key: key, Value: jsonData[category][key] };
+          });
+        } else {
+          translations = await Promise.all(
+            Object.keys(jsonData[category]).map(async (key) => {
+              const translatedValue = await translateText(jsonData[category][key], lang);
+              return { Category: category, Key: key, Value: translatedValue };
+            })
+          );
+        }
         rows.push(...translations);
       } else {
-        // If the category is empty, add a placeholder row
         rows.push({ Category: category, Key: "(empty)", Value: "(empty)" });
       }
     }
