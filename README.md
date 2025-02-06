@@ -17,7 +17,7 @@ config.json:
 }`
 
 <h3 align="left">STEP 3</h3> 
-<p align="left">In the <code>jsonToXlsx.js</code> file, inside the <code>jsonToExcelWithTranslation</code> function, add entries to the <code>category</code> array AFTER the <code>languages</code> entry, according to the structure of your JSON file (e.g., <code>labels</code>, <code>strings</code>, and <code>errors</code> in the case of our <code>example.json</code> file).</p>
+<p align="left">In the <code>jsonToXlsx.js</code> file, inside the <code>jsonToExcelWithTranslation</code> function, add entries to the <code>category</code> array AFTER the <code>"languages"</code> entry, or according to the structure of your JSON file (e.g., <code>labels</code>, <code>strings</code>, and <code>errors</code> in the case of our <code>example.json</code> file).</p>
 
 <h3 align="left">STEP 4</h3> <p align="left">Ensure that the JSON file you want to import contains a <code>languages</code> object with the correct ISO codes for each language you want to translate. For example:</p>
 
