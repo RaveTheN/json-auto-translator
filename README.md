@@ -1,4 +1,8 @@
 ﻿<h1 align="center">Welcome to i.J.E.T.T: i18n's JSON/Excel Tool for Translation</h1>
+
+![image](https://github.com/user-attachments/assets/75f8e1fc-79a0-4dec-be32-302538525630)
+
+ 
 <h2 align="center">Setup guide </h2>
 
 <p align="left">In the following guide, I'm going to guide you step-by-step through the setup and use of this tool.</p>
