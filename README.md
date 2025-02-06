@@ -2,7 +2,7 @@
 <h2 align="center">Setup guide </h2>
 
 <p align="left">In the following guide, I'm going to guide you step-by-step through the setup and use of this tool.</p>
-<p align="left">Things you will need:<strong>VSCode</strong> and basic knowledge of javascript.</p>
+<p align="left">Things you will need: <strong>VSCode</strong> with <strong>Live Server extension</strong> and basic knowledge of javascript.</p>
 
 <p align="left">NOTE: This tool was originally thought to work with the JSON files used in the i18n locales typically used in VUE.js projects, especially using Vuetify. Feel free, however, to adjust the code to your needs as it can be pretty flexible, as you are about to see for yourself.</p>
 
