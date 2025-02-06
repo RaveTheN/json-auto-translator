@@ -11,21 +11,82 @@
         text-align: center;
         margin-top: 50px;
       }
-      input {
-        margin-top: 20px;
+      .drop-zone {
+        border: 2px dashed #ccc;
+        padding: 20px;
+        margin: 20px auto;
+        width: 50%;
+        cursor: pointer;
+      }
+      .drop-zone:hover {
+        background-color: #f9f9f9;
+      }
+      .drop-zone.dragover {
+        border-color: #333;
+        background-color: #e0e0e0;
+      }
+      input[type="file"] {
+        display: none;
       }
     </style>
   </head>
   <body>
     <h1>Convert JSON to Excel with Translation</h1>
+    <h3>This tool expects a JSON in English as input</h3>
+    <div id="jsonDropZone" class="drop-zone">Drag & Drop JSON file here or Click to Browse</div>
     <input type="file" id="JSONfileInput" accept="application/json" />
-    <p>Select a JSON file to generate an Excel file with automatic translations.</p>
 
     <h1>Convert Excel to JSON(s)</h1>
+    <h3>Will download multiple JSONs in case of multiple sheet.</h3>
+    <h3>Each sheet name will be the name of each derived JSON.</h3>
+    <div id="excelDropZone" class="drop-zone">Drag & Drop Excel file here or Click to Browse</div>
     <input type="file" id="EXCELfileInput" accept=".xlsx" />
-    <p>Select an Excel file to generate a JSON for each sheet of the workbook.</p>
 
     <script src="jsonToXlsx.js"></script>
     <script src="jsonFromXlsx.js"></script>
+
+    <script>
+      function setupDragAndDrop(dropZoneId, inputId) {
+        const dropZone = document.getElementById(dropZoneId);
+        const fileInput = document.getElementById(inputId);
+
+        // Handle drag events
+        dropZone.addEventListener("dragover", (e) => {
+          e.preventDefault();
+          dropZone.classList.add("dragover");
+        });
+
+        dropZone.addEventListener("dragleave", () => {
+          dropZone.classList.remove("dragover");
+        });
+
+        dropZone.addEventListener("drop", (e) => {
+          e.preventDefault();
+          dropZone.classList.remove("dragover");
+
+          const files = e.dataTransfer.files;
+          if (files.length > 0) {
+            fileInput.files = files; // Assign file to input field
+            fileInput.dispatchEvent(new Event("change")); // Trigger the change event
+          }
+        });
+
+        // Handle click event to trigger file input
+        dropZone.addEventListener("click", () => {
+          fileInput.click();
+        });
+
+        // Handle file input change
+        fileInput.addEventListener("change", () => {
+          if (fileInput.files.length > 0) {
+            dropZone.innerText = fileInput.files[0].name; // Show file name
+          }
+        });
+      }
+
+      // Initialize drag & drop for both JSON and Excel upload
+      setupDragAndDrop("jsonDropZone", "JSONfileInput");
+      setupDragAndDrop("excelDropZone", "EXCELfileInput");
+    </script>
   </body>
 </html>

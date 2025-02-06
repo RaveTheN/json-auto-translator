@@ -57,32 +57,50 @@ async function jsonToExcelWithTranslation(jsonData) {
   let wb = XLSX.utils.book_new();
 
   for (let lang of Object.keys(jsonData.languages)) {
-    let rows = [];
+    if (lang !== "en") {
+      let rows = [];
 
-    //insert new voices after "languages"
-    for (let category of ["languages", "labels", "strings", "errors"]) {
-      if (jsonData[category] && Object.keys(jsonData[category]).length > 0) {
-        let translations;
-        if (category === "languages") {
-          translations = Object.keys(jsonData[category]).map((key) => {
+      //insert new voices after "languages"
+      for (let category of ["languages", "labels", "strings", "measures", "errors"]) {
+        if (jsonData[category] && Object.keys(jsonData[category]).length > 0) {
+          let translations;
+          if (category === "languages") {
+            translations = Object.keys(jsonData[category]).map((key) => {
+              return { Category: category, Key: key, Value: jsonData[category][key] };
+            });
+          } else {
+            translations = await Promise.all(
+              Object.keys(jsonData[category]).map(async (key) => {
+                const translatedValue = await translateText(jsonData[category][key], lang);
+                return { Category: category, Key: key, Value: translatedValue };
+              })
+            );
+          }
+          rows.push(...translations);
+        } else {
+          rows.push({ Category: category, Key: "(empty)", Value: "(empty)" });
+        }
+      }
+
+      let ws = XLSX.utils.json_to_sheet(rows);
+      XLSX.utils.book_append_sheet(wb, ws, lang.toUpperCase());
+    } else {
+      let rows = [];
+
+      for (let category of ["languages", "labels", "strings", "measures", "errors"]) {
+        if (jsonData[category] && Object.keys(jsonData[category]).length > 0) {
+          let translations = Object.keys(jsonData[category]).map((key) => {
             return { Category: category, Key: key, Value: jsonData[category][key] };
           });
+          rows.push(...translations);
         } else {
-          translations = await Promise.all(
-            Object.keys(jsonData[category]).map(async (key) => {
-              const translatedValue = await translateText(jsonData[category][key], lang);
-              return { Category: category, Key: key, Value: translatedValue };
-            })
-          );
+          rows.push({ Category: category, Key: "(empty)", Value: "(empty)" });
         }
-        rows.push(...translations);
-      } else {
-        rows.push({ Category: category, Key: "(empty)", Value: "(empty)" });
       }
-    }
 
-    let ws = XLSX.utils.json_to_sheet(rows);
-    XLSX.utils.book_append_sheet(wb, ws, lang.toUpperCase());
+      let ws = XLSX.utils.json_to_sheet(rows);
+      XLSX.utils.book_append_sheet(wb, ws, lang.toUpperCase());
+    }
   }
 
   XLSX.writeFile(wb, "translations.xlsx");
