@@ -8,7 +8,7 @@
 <p align="left">Clone this repository.</p>
 
 <h3 align="left">STEP 2</h3>
-<p align="left">Create a <code>config.json</code> file inside the cloned folder with the following structure:</p>
+<p align="left">You will need a Google Cloud API key for this tool to work Once you have it, create a <code>config.json</code> file inside the cloned folder with the following structure:</p>
 
 config.json:
 `
