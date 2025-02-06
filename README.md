@@ -37,4 +37,6 @@ config.json:
 
 <h3 align="left">STEP 5</h3> <p align="left">Go live with VS Code using the Live Server extension or any other method you prefer.</p>
 
-<h3 align="left">STEP 6</h3> <p align="left">Import your JSON and Excel files and watch the magic happen! 🪄✨</p><p align="left"><strong>Note:</strong> If the JSON file contains many entries, it might take a few minutes. Be patient and check the network tab in your browser's developer tools to ensure that the calls to the Google Translation API are successful.</p> ```
+<h3 align="left">Convert JSON to XLSX</h3> <p align="left">Import your JSON and Excel files and watch the magic happen! 🪄✨</p><p align="left"><strong>Note:</strong> If the JSON file contains many entries, it might take a few minutes. Be patient and check the network tab in your browser's developer tools to ensure that the calls to the Google Translation API are successful.</p>
+
+<h3 align="left">Convert XLSX to JSON</h3> <p align="left">Simply import the previously created file. When it's done, it will make you download a single JSON file for each language sheet you had inside .xlsx file.</p>
